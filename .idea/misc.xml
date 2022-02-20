@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable-v24/ic_baseline_folder_24.xml" value="0.24814814814814815" />
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_baseline_android_24.xml" value="0.24814814814814815" />
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.24259259259259258" />
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_baseline_audiotrack_24.xml" value="0.24259259259259258" />
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_home_icon.xml" value="0.24259259259259258" />
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_icon_audio_folder.xml" value="0.24259259259259258" />
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_icon_avi_file.xml" value="0.24259259259259258" />
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_icon_document_folder.xml" value="0.24259259259259258" />
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_icon_download_folder.xml" value="0.24259259259259258" />
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_icon_image_folder.xml" value="0.24259259259259258" />
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_round_download.xml" value="0.24259259259259258" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_dynamic.xml" value="0.24427083333333333" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_permission_checking.xml" value="0.24427083333333333" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_serach_view.xml" value="0.264" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_apk.xml" value="0.24427083333333333" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_archive.xml" value="0.24427083333333333" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_audio.xml" value="0.24427083333333333" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_card.xml" value="0.176" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_documents.xml" value="0.24427083333333333" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_downloads.xml" value="0.24427083333333333" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_dynamic.xml" value="0.176" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_home.xml" value="0.4" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_internal.xml" value="0.2" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_photos.xml" value="0.24427083333333333" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_videoes.xml" value="0.24427083333333333" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/nav_header.xml" value="0.264" />
+        <entry key="..\:/FileExplorer/app/src/main/res/menu/nav_menu.xml" value="0.24427083333333333" />
+        <entry key="..\:/FileExplorer/app/src/main/res/menu/toolbar_menu.xml" value="0.24427083333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

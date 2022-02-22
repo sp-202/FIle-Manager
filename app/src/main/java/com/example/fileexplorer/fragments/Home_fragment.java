@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.fileexplorer.R;
 import com.example.fileexplorer.dynamic_tabs.Common_activity;
+import com.example.fileexplorer.search_view.Detailed_view;
 
 public class Home_fragment extends Fragment {
     View view;
@@ -38,7 +39,7 @@ public class Home_fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), Common_activity.class);
+                Intent intent = new Intent(getActivity(), Detailed_view.class);
 
                 String[] img_paths = new String[4];
                 img_paths[0] = path + "/Download";
@@ -55,7 +56,7 @@ public class Home_fragment extends Fragment {
         });
 
         downloads_icon.setOnClickListener(view -> {
-            Intent intent = new Intent(getActivity(), Common_activity.class);
+            Intent intent = new Intent(getActivity(), Detailed_view.class);
             String download_path = path + "/Android/media";
             intent.putExtra("download_path", download_path);
             startActivity(intent);

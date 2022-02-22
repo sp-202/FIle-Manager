@@ -1,10 +1,10 @@
 package com.example.fileexplorer.dynamic_tabs;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,13 +13,15 @@ import com.example.fileexplorer.databinding.ActivityCommonBinding;
 
 import java.io.File;
 import java.util.Stack;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Common_activity extends AppCompatActivity {
 
     private static final String TAG = "myApp458";
     ActivityCommonBinding binding;
 
-    String path1;
+    public static String path1;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -34,23 +36,24 @@ public class Common_activity extends AppCompatActivity {
             path1 = intent.getStringExtra("download_path");
         }
 
-        new Common_activity.InitTask().execute(this);
+//        new Common_activity.InitTask().execute(this);
+        ExecuteTask();
     }
 
-    protected class InitTask extends AsyncTask<Context, Integer, Integer> {
-
+    public void ExecuteTask(){
         File file = new File(path1);
-        long countFile = 0;
 
-        @Override
-        protected Integer doInBackground(Context... contexts) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(() -> {
+            // Background work here
+            long countFile = 0;
             Stack<File> s = new Stack<>();
             s.push(file);
             while (!s.empty()) {
                 File tempFile = s.pop();
                 if (tempFile.isFile()) {
                     countFile++;
-                    publishProgress((int) countFile);
                 } else if (tempFile.isDirectory()) {
                     File[] f = tempFile.listFiles();
                     for (File fpp : f) {
@@ -58,32 +61,16 @@ public class Common_activity extends AppCompatActivity {
                     }
                 }
             }
-            return (int) countFile;
-        }
 
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            binding.fileItemCount.setText(String.valueOf(values[0]));
-        }
-
-    }
-
-    public static int countFiles(File file) {
-        int count = 0;
-        Stack<File> s = new Stack<>();
-        s.push(file);
-        while (!s.empty()) {
-            File tempFile = s.pop();
-            if (tempFile.isFile()) {
-                count++;
-            } else if (tempFile.isDirectory()) {
-                File[] f = tempFile.listFiles();
-                for (File fpp : f) {
-                    s.push(fpp);
+            long finalCountFile = countFile;
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    // UI work here
+                    binding.fileItemCount.setText(String.valueOf(finalCountFile));
                 }
-            }
-        }
-        return count;
+            });
+        });
     }
+
 }

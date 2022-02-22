@@ -7,6 +7,7 @@
         <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_baseline_android_24.xml" value="0.24814814814814815" />
         <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.24259259259259258" />
         <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_baseline_audiotrack_24.xml" value="0.24259259259259258" />
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_folder_icon.xml" value="0.2604166666666667" />
         <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_home_icon.xml" value="0.24259259259259258" />
         <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_icon_audio_folder.xml" value="0.24259259259259258" />
         <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_icon_avi_file.xml" value="0.24259259259259258" />
@@ -14,10 +15,15 @@
         <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_icon_download_folder.xml" value="0.24259259259259258" />
         <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_icon_image_folder.xml" value="0.24259259259259258" />
         <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_round_download.xml" value="0.24259259259259258" />
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_round_today_24.xml" value="0.2604166666666667" />
+        <entry key="..\:/FileExplorer/app/src/main/res/drawable/ic_twotone_folder_open_24.xml" value="0.2604166666666667" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_common.xml" value="0.264" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_detailed_view.xml" value="0.536" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_dynamic.xml" value="0.24427083333333333" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_permission_checking.xml" value="0.24427083333333333" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_serach_view.xml" value="0.264" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/common_adapter_item_view.xml" value="0.4" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_apk.xml" value="0.24427083333333333" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_archive.xml" value="0.24427083333333333" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_audio.xml" value="0.24427083333333333" />

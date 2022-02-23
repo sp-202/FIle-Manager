@@ -1,18 +1,19 @@
 package com.example.fileexplorer.search_view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.fileexplorer.databinding.ActivityDetailedViewBinding;
 
-import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Stack;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -21,6 +22,8 @@ public class Detailed_view extends AppCompatActivity {
     ActivityDetailedViewBinding binding;
     public static String path1;
 
+    @SuppressLint("SetTextI18n")
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,79 +37,69 @@ public class Detailed_view extends AppCompatActivity {
             path1 = intent.getStringExtra("download_path");
         }
 
-//        new Common_activity.InitTask().execute(this);
+        binding.detailedPageFolderInfo.setText("0  folders");
+        binding.detailedPageFileInfo.setText("0  files");
+        binding.detailedPageSizeOfFiles.setText("0  B");
         ExecuteTask();
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     public void ExecuteTask() {
-        File file = new File(path1);
-
-        ExecutorService executor = Executors.newFixedThreadPool(4);
+        ExecutorService executor = Executors.newFixedThreadPool(3);
         Handler handler = new Handler(Looper.getMainLooper());
         Handler handler2 = new Handler(Looper.getMainLooper());
+        Handler handler3 = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
             // Background work here
-            long countFile = 0;
-            long countFolder = 0;
-            Stack<File> s = new Stack<>();
-            s.push(file);
-            while (!s.empty()) {
-                File tempFile = s.pop();
-                if (tempFile.isFile()) {
-                    countFile++;
-                } else if (tempFile.isDirectory()) {
-                    File[] f = tempFile.listFiles();
-                    countFolder++;
-
-                    for (File fpp : f) {
-                        s.push(fpp);
-                    }
-                }
+            long size = 0;
+            GetFileAndFolderSize getFileAndFolderSize = new GetFileAndFolderSize();
+            try {
+                size = getFileAndFolderSize.FileSize(path1);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
-            long finalCountFile = countFile;
-            long finalCountFolder = countFolder;
-
+            long finalSize = size;
             handler.post(() -> {
-                // UI work here
-                binding.detailedPageFolderInfo.setText(finalCountFolder + "  folders");
-                binding.detailedPageFileInfo.setText(finalCountFile + "  files");
+
+                DecimalFormat df = new DecimalFormat("#.##");
+                if (finalSize >= Math.pow(10, 9)) {
+                    binding.detailedPageSizeOfFiles.setText(df.format((finalSize / Math.pow(10, 9))) + "  GB");
+                } else if (finalSize >= Math.pow(10, 6)) {
+                    binding.detailedPageSizeOfFiles.setText(df.format((finalSize / Math.pow(10, 6))) + "  MB");
+                } else if (finalSize >= Math.pow(10, 3)) {
+                    binding.detailedPageSizeOfFiles.setText(df.format((finalSize / Math.pow(10, 3))) + "  KB");
+                } else {
+                    binding.detailedPageSizeOfFiles.setText(finalSize + "  B");
+                }
             });
         });
         executor.execute(() -> {
-            // Background work here
-            long sizeOf = 0;
-            Stack<File> s = new Stack<>();
-            s.push(file);
-            while (!s.empty()) {
-                File tempFile = s.pop();
-                if (tempFile.isFile()) {
-                    sizeOf += tempFile.length();
-                } else if (tempFile.isDirectory()) {
-                    File[] f = tempFile.listFiles();
-                    for (File fpp : f) {
-                        s.push(fpp);
-                    }
-                }
+            long count = 0;
+            GetFileAndFolderSize getFileAndFolderSize = new GetFileAndFolderSize();
+            try {
+                count = getFileAndFolderSize.countFolders(path1);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            long finalSizeOf = sizeOf;
-            handler2.post(() -> {
-                // UI work here
-                DecimalFormat df = new DecimalFormat("#.##");
-                if (finalSizeOf >= Math.pow(10, 9)) {
-                    binding.detailedPageSizeOfFiles.setText(df.format((finalSizeOf / Math.pow(10, 9))) + "  GB");
-                } else if (finalSizeOf >= Math.pow(10, 6)) {
-                    binding.detailedPageSizeOfFiles.setText(df.format((finalSizeOf / Math.pow(10, 6))) + "  MB");
-                } else if (finalSizeOf >= Math.pow(10, 3)) {
-                    binding.detailedPageSizeOfFiles.setText(df.format((finalSizeOf / Math.pow(10, 3))) + "  KB");
-                } else {
-                    binding.detailedPageSizeOfFiles.setText(finalSizeOf + "  B");
-                }
-            });
 
+            long finalCount = count;
+            handler2.post(() -> binding.detailedPageFolderInfo.setText(finalCount + " folders"));
+        });
+
+        executor.execute(() -> {
+            long count = 0;
+            GetFileAndFolderSize getFileAndFolderSize = new GetFileAndFolderSize();
+            try {
+                count = getFileAndFolderSize.countFiles(path1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            long finalCount = count;
+            handler3.post(() -> binding.detailedPageFileInfo.setText(finalCount + "  files"));
         });
     }
-
 }

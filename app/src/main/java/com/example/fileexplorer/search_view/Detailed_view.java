@@ -6,14 +6,23 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.MenuItem;
+import android.view.View;
 
+
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import com.example.fileexplorer.R;
 import com.example.fileexplorer.databinding.ActivityDetailedViewBinding;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -21,6 +30,7 @@ public class Detailed_view extends AppCompatActivity {
 
     ActivityDetailedViewBinding binding;
     public static String path1;
+    GetFileAndFolderSize getFileAndFolderSize = new GetFileAndFolderSize();
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -30,17 +40,28 @@ public class Detailed_view extends AppCompatActivity {
         binding = ActivityDetailedViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Toolbar toolbar = findViewById(R.id.detailed_page_titleBar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+
         Intent intent = getIntent();
         if (intent.hasExtra("pic_folder")) {
 
         } else if (intent.hasExtra("download_path")) {
             path1 = intent.getStringExtra("download_path");
         }
-
-        binding.detailedPageFolderInfo.setText("0  folders");
-        binding.detailedPageFileInfo.setText("0  files");
-        binding.detailedPageSizeOfFiles.setText("0  B");
-        ExecuteTask();
+        Path dir = Paths.get(path1);
+        if (dir.toFile().isDirectory()) {
+            ExecuteTask();
+            binding.detailedPageFolderInfo.setText("0  folders");
+            binding.detailedPageFileInfo.setText("0  files");
+            binding.detailedPageSizeOfFiles.setText("0  B");
+        } else {
+            ExecuteFileInfo();
+            binding.detailedPageFileInfo.setVisibility(View.INVISIBLE);
+            binding.detailedPageSizeOfFiles.setVisibility(View.INVISIBLE);
+        }
 
     }
 
@@ -54,7 +75,6 @@ public class Detailed_view extends AppCompatActivity {
         executor.execute(() -> {
             // Background work here
             long size = 0;
-            GetFileAndFolderSize getFileAndFolderSize = new GetFileAndFolderSize();
             try {
                 size = getFileAndFolderSize.FileSize(path1);
             } catch (IOException e) {
@@ -63,22 +83,11 @@ public class Detailed_view extends AppCompatActivity {
 
             long finalSize = size;
             handler.post(() -> {
-
-                DecimalFormat df = new DecimalFormat("#.##");
-                if (finalSize >= Math.pow(10, 9)) {
-                    binding.detailedPageSizeOfFiles.setText(df.format((finalSize / Math.pow(10, 9))) + "  GB");
-                } else if (finalSize >= Math.pow(10, 6)) {
-                    binding.detailedPageSizeOfFiles.setText(df.format((finalSize / Math.pow(10, 6))) + "  MB");
-                } else if (finalSize >= Math.pow(10, 3)) {
-                    binding.detailedPageSizeOfFiles.setText(df.format((finalSize / Math.pow(10, 3))) + "  KB");
-                } else {
-                    binding.detailedPageSizeOfFiles.setText(finalSize + "  B");
-                }
+                fileSize_calculation(finalSize);
             });
         });
         executor.execute(() -> {
             long count = 0;
-            GetFileAndFolderSize getFileAndFolderSize = new GetFileAndFolderSize();
             try {
                 count = getFileAndFolderSize.countFolders(path1);
             } catch (IOException e) {
@@ -91,7 +100,6 @@ public class Detailed_view extends AppCompatActivity {
 
         executor.execute(() -> {
             long count = 0;
-            GetFileAndFolderSize getFileAndFolderSize = new GetFileAndFolderSize();
             try {
                 count = getFileAndFolderSize.countFiles(path1);
             } catch (IOException e) {
@@ -102,4 +110,44 @@ public class Detailed_view extends AppCompatActivity {
             handler3.post(() -> binding.detailedPageFileInfo.setText(finalCount + "  files"));
         });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void ExecuteFileInfo() {
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(() -> {
+            long fileSize = 0;
+            try {
+                fileSize = getFileAndFolderSize.FileSize(path1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            long finalSize = fileSize;
+            handler.post(() -> fileSize_calculation(finalSize));
+        });
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void fileSize_calculation(long finalSize) {
+        DecimalFormat df = new DecimalFormat("#.##");
+        if (finalSize >= Math.pow(10, 9)) {
+            binding.detailedPageSizeOfFiles.setText(df.format((finalSize / Math.pow(10, 9))) + "  GB");
+        } else if (finalSize >= Math.pow(10, 6)) {
+            binding.detailedPageSizeOfFiles.setText(df.format((finalSize / Math.pow(10, 6))) + "  MB");
+        } else if (finalSize >= Math.pow(10, 3)) {
+            binding.detailedPageSizeOfFiles.setText(df.format((finalSize / Math.pow(10, 3))) + "  KB");
+        } else {
+            binding.detailedPageSizeOfFiles.setText(finalSize + "  B");
+        }
+    }
+
 }

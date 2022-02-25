@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,10 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(binding.getRoot());
-
-        String path = getIntent().getStringExtra("path");
 
         drawerLayout = findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -45,13 +40,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar.setClickable(true);
         setSupportActionBar(toolbar);
 
-        binding.searchBarTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SearchView.class);
-                startActivity(intent);
+        binding.searchBarTitle.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, SearchView.class);
+            startActivity(intent);
 
-            }
         });
 
         NavigationView navigationView = findViewById(R.id.nav_view);

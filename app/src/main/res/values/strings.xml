@@ -20,41 +20,8 @@
     <string name="search_string">Tap here to search</string>
 
     <string name="loremEp">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque architecto error at odio doloribus possimus,
-        saepe repellat corrupti. Numquam rem neque repudiandae at doloribus iure aut atque cupiditate explicabo
-        voluptate alias autem asperiores molestias eaque commodi, rerum ipsum. Accusamus laudantium repellendus dolor
-        quasi, repudiandae soluta, debitis, libero sequi voluptatum recusandae minus iusto provident alias placeat
-        aliquid voluptate vero earum odio. Hic debitis asperiores necessitatibus cum est officia modi, reprehenderit
-        omnis placeat numquam totam pariatur impedit, accusantium obcaecati veritatis architecto ipsam vero, porro sunt
-        recusandae perferendis quo. Quos sed sapiente quam, sunt ex deserunt harum atque, in porro eveniet tempora eos
-        obcaecati nisi aspernatur ipsa quaerat laudantium aut error facere ipsam quae eum molestiae necessitatibus. Illo
-        voluptates repellat nisi, aliquid maiores eius numquam perspiciatis at veniam aspernatur harum. Minus vero
-        reiciendis laudantium. Consequuntur sint dolorem est ratione officia et. Minus, consectetur ut. Praesentium
-        facilis doloremque sit repudiandae eaque nesciunt error veritatis nobis reprehenderit, optio fugit! Animi illo
-        ipsum modi possimus ullam temporibus explicabo suscipit quisquam, velit beatae asperiores expedita placeat
-        soluta facilis minus quos quidem ducimus est! Sit reprehenderit et dolor tenetur facilis deleniti tempore
-        soluta, necessitatibus ea dolorum repudiandae culpa ut corrupti veritatis modi laudantium perferendis fugit
-        incidunt officiis iusto excepturi maiores porro laborum? Possimus minus quasi, delectus saepe similique at
-        voluptatibus a veritatis porro eius iusto corporis, asperiores distinctio cupiditate soluta illo laudantium
-        voluptates et aliquid molestiae adipisci. Tempora delectus debitis ducimus repellendus quos esse sapiente
-        veritatis facilis aspernatur fuga fugit numquam veniam voluptas, voluptatum consectetur nihil ipsa aliquid
-        assumenda, explicabo quisquam. Voluptatibus tempore excepturi consectetur? Maiores hic dolores voluptatem beatae
-        suscipit consequuntur ipsum doloremque consequatur reprehenderit? Dignissimos dolorum eius esse porro dolore
-        veniam eos consequuntur iste vel qui, iusto velit cumque quia animi sapiente fuga officia hic alias accusantium,
-        corrupti et rerum rem maiores facere? Reiciendis ipsa optio debitis neque error aspernatur delectus deleniti
-        sint, dolorem, fugit alias laudantium dignissimos dolorum molestiae explicabo consectetur iure? Labore, possimus
-        odio! Voluptatem, repellendus sed in optio perferendis beatae. Totam sequi quaerat beatae iure eligendi sunt
-        temporibus explicabo unde, facilis incidunt aliquam deleniti error provident tempore reiciendis atque ratione
-        esse iste mollitia perferendis minima! Inventore harum laboriosam, quidem quis aliquid unde labore distinctio!
-        Iusto accusantium, maxime soluta adipisci vero impedit possimus. Fugit, explicabo nulla. Molestias fugit ipsa
-        aperiam eius, placeat quo, magnam blanditiis reprehenderit voluptas odio labore esse omnis odit! Fuga, mollitia
-        obcaecati. Eveniet illo ipsam soluta laboriosam quasi omnis numquam, ipsum labore officia vel pariatur at
-        necessitatibus molestiae voluptatum placeat veritatis perspiciatis expedita modi dignissimos eligendi cupiditate
-        aliquam, fuga nesciunt qui. Expedita voluptates mollitia ut cupiditate! Itaque soluta eum a perspiciatis earum
-        eius ipsam est rerum porro nisi sed ex ut accusamus excepturi exercitationem nobis, doloribus impedit sequi
-        dolorum quibusdam velit commodi? Tempore minima unde nisi, ratione eaque inventore odio quibusdam doloribus,
-        officia ea explicabo veniam et porro commodi aut debitis sequi aspernatur! Nemo dolor temporibus ad voluptas quo
-        magni amet fugit eveniet facere, perspiciatis accusamus nostrum ratione illo sint vitae voluptate aliquid
-        repudiandae ipsum tenetur minus tempora! Laboriosam, ipsum laborum.
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="copy_code_view">Copy</string>
 </resources>

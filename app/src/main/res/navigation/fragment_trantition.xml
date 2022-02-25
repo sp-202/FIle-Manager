@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_trantition"
+    app:startDestination="@id/home_fragment_direction">
+
+    <fragment
+        android:id="@+id/home_fragment_direction"
+        android:name="com.example.fileexplorer.fragments.Home_fragment"
+        android:label="Home_fragment" >
+        <action
+            android:id="@+id/action_home_fragment_direction_to_blankFragment"
+            app:destination="@id/blankFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/blankFragment"
+        android:name="com.example.fileexplorer.BlankFragment"
+        android:label="fragment_blank"
+        tools:layout="@layout/fragment_blank" />
+</navigation>

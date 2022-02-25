@@ -12,9 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.example.fileexplorer.FileReaderForAnyFile;
 import com.example.fileexplorer.R;
-import com.example.fileexplorer.dynamic_tabs.Common_activity;
+import com.example.fileexplorer.fragments.overview_fragments.PicturesFragment;
+import com.example.fileexplorer.fragments.overview_fragments.VideosFragment;
 import com.example.fileexplorer.search_view.Detailed_view;
+
+import java.util.Objects;
 
 public class Home_fragment extends Fragment {
     View view;
@@ -35,73 +39,38 @@ public class Home_fragment extends Fragment {
         apk_icon = view.findViewById(R.id.apk_folder_icon);
         memory_icon = view.findViewById(R.id.memory_folder_icon);
 
-        image_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), Detailed_view.class);
+        image_icon.setOnClickListener(view -> {
+            Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), PicturesFragment.class);
 
-                String[] img_paths = new String[4];
-                img_paths[0] = path + "/Download";
-                img_paths[1] = path + "/DCIM";
-                img_paths[2] = path + "/Pictures";
-                img_paths[3] = path + "Android/media/com.whatsapp/WhatsApp/Media/WhatsApp Images";
-                intent.putExtra("pic_folder", "pics12");
-                intent.putExtra("download", img_paths[0]);
-                intent.putExtra("DCIM", img_paths[1]);
-                intent.putExtra("Pic", img_paths[2]);
-                intent.putExtra("WhatsApp", img_paths[3]);
-                startActivity(intent);
-            }
+            String[] img_paths = new String[4];
+            img_paths[0] = path + "/Download";
+            img_paths[1] = path + "/DCIM";
+            img_paths[2] = path + "/Pictures";
+            img_paths[3] = path + "Android/media/com.whatsapp/WhatsApp/Media/WhatsApp Images";
+            intent.putExtra("pic_folder", "pics12");
+            intent.putExtra("download", img_paths[0]);
+            intent.putExtra("DCIM", img_paths[1]);
+            intent.putExtra("Pic", img_paths[2]);
+            intent.putExtra("WhatsApp", img_paths[3]);
+            startActivity(intent);
         });
 
         downloads_icon.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), Detailed_view.class);
-            String download_path = path + "/Android/media";
+            String download_path = path + "/Download";
             intent.putExtra("download_path", download_path);
             startActivity(intent);
         });
 
-        videos_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
+        videos_icon.setOnClickListener(view -> {
+            VideosFragment videoesFragment = new VideosFragment();
+            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, videoesFragment).addToBackStack(null).commit();
         });
 
-        documents_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        music_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        archive_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        apk_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        memory_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
+        memory_icon.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), FileReaderForAnyFile.class);
+            startActivity(intent);
         });
 
         return view;

@@ -34,7 +34,7 @@ public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_a
     @Override
     public void onBindViewHolder(@NonNull Common_adapter_ViewHolder holder, int position) {
         File selectedFile = fileArrayList.get(position);
-        
+        holder.fileName.setText(selectedFile.getName());
     }
 
     @Override

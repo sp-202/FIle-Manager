@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.fileexplorer.FileReaderForAnyFile;
 import com.example.fileexplorer.R;
+import com.example.fileexplorer.dynamic_tabs.Common_activity;
 import com.example.fileexplorer.fragments.overview_fragments.PicturesFragment;
 import com.example.fileexplorer.fragments.overview_fragments.VideosFragment;
 import com.example.fileexplorer.search_view.Detailed_view;
@@ -57,9 +58,7 @@ public class Home_fragment extends Fragment {
         });
 
         downloads_icon.setOnClickListener(view -> {
-            Intent intent = new Intent(getActivity(), Detailed_view.class);
-            String download_path = path + "/Download";
-            intent.putExtra("download_path", download_path);
+            Intent intent = new Intent(getActivity(), Common_activity.class);
             startActivity(intent);
         });
 

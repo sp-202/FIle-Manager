@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_file_selected"
+        android:title="Select" />
+
+    <item
+        android:id="@+id/menu_file_share"
+        android:title="Share" />
+
+    <item
+        android:id="@+id/menu_file_open_with"
+        android:title="Open with" />
+
+    <item
+        android:id="@+id/menu_file_move_to"
+        android:title="Move to" />
+
+    <item
+        android:id="@+id/menu_file_copy_to"
+        android:title="Copy to" />
+
+    <item
+        android:id="@+id/menu_file_rename"
+        android:title="Rename" />
+
+    <item
+        android:id="@+id/menu_file_addTo_favourite"
+        android:title="Add to favourite" />
+
+    <item
+        android:id="@+id/menu_file_moveTo_trash"
+        android:title="Move to trash" />
+
+    <item
+        android:id="@+id/menu_file_moveTo_safeFolder"
+        android:title="Move to safe folder" />
+
+    <item
+        android:id="@+id/menu_file_delete_permanently"
+        android:title="Delete permanently" />
+
+    <item
+        android:id="@+id/menu_file_file_info"
+        android:title="File info" />
+</menu>

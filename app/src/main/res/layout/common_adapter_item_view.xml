@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_vew="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="95dp"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
@@ -21,27 +22,39 @@
             android:id="@+id/file_folder_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:cardCornerRadius="4dp">
+            android:layout_marginStart="3dp"
+            android:visibility="visible"
+            app:cardCornerRadius="4dp"
+            card_vew:cardElevation="0.5dp">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:id="@+id/file_icon_view_item"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_folder_icon" />
         </androidx.cardview.widget.CardView>
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/folder_icon_item_view"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_folder_icon"
-            android:visibility="gone" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="3dp"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_folder_icon" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/item_folderOrFile"
-            android:layout_width="290dp"
+            android:layout_width="280dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:padding="4dp">
@@ -56,7 +69,7 @@
                 android:padding="2dp"
                 android:text="@string/sample_text"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/timeStamp_item"
@@ -66,7 +79,7 @@
                 android:gravity="center_vertical"
                 android:padding="2dp"
                 android:text="@string/sample_text"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
         </LinearLayout>
 
         <ImageView
@@ -84,7 +97,6 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginStart="80dp"
         android:background="#009688" />
 </LinearLayout>

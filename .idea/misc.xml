@@ -21,11 +21,12 @@
         <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_common.xml" value="0.264" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_detailed_view.xml" value="0.4" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_dynamic.xml" value="0.24427083333333333" />
-        <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_file_reader_for_any_file.xml" value="0.72" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_file_reader_for_any_file.xml" value="0.4" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_file_reader_for_own.xml" value="0.24375" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_permission_checking.xml" value="0.24427083333333333" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/activity_serach_view.xml" value="0.264" />
-        <entry key="..\:/FileExplorer/app/src/main/res/layout/common_adapter_item_view.xml" value="0.6" />
+        <entry key="..\:/FileExplorer/app/src/main/res/layout/common_adapter_item_view.xml" value="0.536" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_apk.xml" value="0.24427083333333333" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_archive.xml" value="0.24427083333333333" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/fragment_audio.xml" value="0.24427083333333333" />
@@ -41,10 +42,12 @@
         <entry key="..\:/FileExplorer/app/src/main/res/layout/nav_header.xml" value="0.264" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/pictures_file_list_fragment.xml" value="0.1331521739130435" />
         <entry key="..\:/FileExplorer/app/src/main/res/layout/videoes_file_list_fragment.xml" value="0.1331521739130435" />
+        <entry key="..\:/FileExplorer/app/src/main/res/menu/common_menu_bar.xml" value="0.21851851851851853" />
         <entry key="..\:/FileExplorer/app/src/main/res/menu/file_folder_options_menu.xml" value="0.24427083333333333" />
         <entry key="..\:/FileExplorer/app/src/main/res/menu/file_reader_menu.xml" value="0.2" />
         <entry key="..\:/FileExplorer/app/src/main/res/menu/nav_menu.xml" value="0.24427083333333333" />
         <entry key="..\:/FileExplorer/app/src/main/res/menu/toolbar_menu.xml" value="0.24427083333333333" />
+        <entry key="..\:/FileExplorer/app/src/main/res/xml/filepaths.xml" value="0.21851851851851853" />
       </map>
     </option>
   </component>

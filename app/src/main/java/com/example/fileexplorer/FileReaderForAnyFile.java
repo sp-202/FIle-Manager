@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.fileexplorer.util.DataHolder;
 import com.pddstudio.highlightjs.HighlightJsView;
 import com.pddstudio.highlightjs.models.Language;
 import com.pddstudio.highlightjs.models.Theme;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class FileReaderForAnyFile extends AppCompatActivity {
 
@@ -37,12 +39,22 @@ public class FileReaderForAnyFile extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        String str = "/storage/emulated/0/Download/AndroidManifest.xml";
-        String content = onSharedIntent();
+
+        Intent intent = getIntent();
+        Log.d(TAG, "onCreate: " + intent);
         HighlightJsView highlightJsView = findViewById(R.id.file_content_view);
         highlightJsView.setTheme(Theme.GITHUB);
         highlightJsView.setHighlightLanguage(Language.AUTO_DETECT);
-        highlightJsView.setSource(content);
+
+        if (intent.getAction().equals(Intent.ACTION_VIEW)) {
+            String content = onSharedIntent();
+            highlightJsView.setSource(content);
+        }
+
+        Log.d(TAG, "onCreate: "+intent.getType());
+        Log.d(TAG, "onCreate: "+intent.getAction());
+
+
     }
 
     @Override
@@ -65,9 +77,12 @@ public class FileReaderForAnyFile extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private String onSharedIntent(){
+    private String onSharedIntent() {
         Intent receiveIntent = getIntent();
+        Log.d(TAG, "onSharedIntent: "+receiveIntent);
+
         Uri fileUri = receiveIntent.getData();
+        Log.d(TAG, "onSharedIntent: "+fileUri.getPath());
         String content = null;
         InputStream inputStream = null;
         try {

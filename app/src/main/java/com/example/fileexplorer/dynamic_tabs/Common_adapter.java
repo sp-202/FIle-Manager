@@ -3,10 +3,14 @@ package com.example.fileexplorer.dynamic_tabs;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,19 +19,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fileexplorer.FileReaderForAnyFile;
 import com.example.fileexplorer.R;
 import com.example.fileexplorer.search_view.Detailed_view;
 import com.example.fileexplorer.util.DataHolder;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_adapter_ViewHolder> {
+    private static final String TAG = "myApp789";
     Context context;
     ArrayList<File> fileArrayList;
 
@@ -97,11 +105,145 @@ public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_a
             }
 
         }
+        holder.itemClick.setOnClickListener(view -> {
+            if (selectedFile.isFile()) {
+                try {
+                    if (selectedFile.getName().endsWith(".pdf")) {
+                        File file = new File(selectedFile.getAbsolutePath());
+                        Intent viewPdf = new Intent(Intent.ACTION_VIEW);
+                        viewPdf.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Uri URI = FileProvider.getUriForFile(context.getApplicationContext(), context.getApplicationContext().getPackageName() + ".provider", file);
+                        Log.d(TAG, "onCreate: " + URI);
+                        viewPdf.setDataAndType(URI, "application/pdf");
+                        viewPdf.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        context.startActivity(viewPdf);
+                    } else {
+                        if (selectedFile.getName().endsWith(".jpg")
+                                || selectedFile.getName().endsWith(".jpeg")
+                                || selectedFile.getName().endsWith(".png")) {
+                            Intent intent = new Intent();
+                            Uri uri = Uri.fromFile(selectedFile);
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setDataAndType(uri, "image/*");
+                            intent.putExtra("mimeType", "image/*");
+                            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            context.startActivity(Intent.createChooser(intent, null));
+                        } else if (selectedFile.getName().endsWith(".mkv")
+                                || selectedFile.getName().endsWith(".avi")
+                                || selectedFile.getName().endsWith(".mp4")) {
+                            Intent intent = new Intent();
+                            Uri uri = Uri.fromFile(selectedFile);
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setDataAndType(uri, "video/*");
+                            intent.putExtra("mimeType", "video/*");
+                            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            context.startActivity(Intent.createChooser(intent, null));
+                        } else if (selectedFile.getName().endsWith(".mp3")
+                                || selectedFile.getName().endsWith(".amr")
+                                || selectedFile.getName().endsWith(".mp2")
+                                || selectedFile.getName().endsWith(".wav")) {
+                            Intent intent = new Intent();
+                            Uri uri = Uri.fromFile(selectedFile);
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setDataAndType(uri, "audio/*");
+                            intent.putExtra("mimeType", "audio/*");
+                            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            context.startActivity(Intent.createChooser(intent, null));
+                        } else if (selectedFile.getName().endsWith(".docx")
+                                || selectedFile.getName().endsWith(".doc")) {
+                            Intent intent = new Intent();
+                            Uri uri = Uri.fromFile(selectedFile);
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setDataAndType(uri, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+                            intent.putExtra("mimeType", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+                            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            context.startActivity(Intent.createChooser(intent, null));
+                        } else if (selectedFile.getName().endsWith(".xlsx")
+                                || selectedFile.getName().endsWith(".xls")
+                                || selectedFile.getName().endsWith(".csv")) {
+                            Intent intent = new Intent();
+                            Uri uri = Uri.fromFile(selectedFile);
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setDataAndType(uri, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                            intent.putExtra("mimeType", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            context.startActivity(Intent.createChooser(intent, null));
+                        } else if (selectedFile.getName().endsWith(".ppt")) {
+                            Intent intent = new Intent();
+                            Uri uri = Uri.fromFile(selectedFile);
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setDataAndType(uri, "application/vnd.ms-powerpoint*");
+                            intent.putExtra("mimeType", "application/vnd.ms-powerpoint*");
+                            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            context.startActivity(Intent.createChooser(intent, null));
+                        } else if (selectedFile.getName().endsWith(".html")
+                                || selectedFile.getName().endsWith(".css")
+                                || selectedFile.getName().endsWith(".txt")) {
+                            Intent intent = new Intent();
+                            Uri uri = Uri.fromFile(selectedFile);
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setDataAndType(uri, "text/*");
+                            intent.putExtra("mimeType", "text/*");
+                            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            context.startActivity(Intent.createChooser(intent, null));
+                        } else if (selectedFile.getName().endsWith(".json")) {
+                            Intent intent = new Intent();
+                            Uri uri = Uri.fromFile(selectedFile);
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setDataAndType(uri, "application/json");
+                            intent.putExtra("mimeType", "application/json");
+                            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            context.startActivity(Intent.createChooser(intent, null));
+                        } else if (selectedFile.getName().endsWith(".js")) {
+                            Intent intent = new Intent();
+                            Uri uri = Uri.fromFile(selectedFile);
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setDataAndType(uri, "application/javascript");
+                            intent.putExtra("mimeType", "application/javascript");
+                            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            context.startActivity(Intent.createChooser(intent, null));
+                        } else {
+                            Intent intent = new Intent();
+                            Uri uri = Uri.fromFile(selectedFile);
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setDataAndType(uri, "*/*");
+                            intent.putExtra("mimeType", "*/*");
+                            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            context.startActivity(Intent.createChooser(intent, null));
+                        }
+                    }
+
+
+                } catch (Exception e) {
+                    Log.d(TAG, "onBindViewHolder: " + e.toString());
+                }
+            }
+        });
         holder.vertDot.setOnClickListener(view -> {
             Context context1 = new ContextThemeWrapper(context, R.style.CustomPopupMenuStyle);
             PopupMenu popupMenu = new PopupMenu(context1, holder.vertDot);
             popupMenu.inflate(R.menu.file_folder_options_menu);
-            if (selectedFile.isDirectory()){
+            if (selectedFile.isDirectory()) {
                 popupMenu.getMenu().findItem(R.id.menu_file_open_with).setVisible(false);
                 popupMenu.getMenu().findItem(R.id.menu_file_share).setVisible(false);
                 popupMenu.getMenu().findItem(R.id.menu_file_addTo_favourite).setVisible(false);
@@ -139,10 +281,9 @@ public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_a
     }
 
     public class Common_adapter_ViewHolder extends RecyclerView.ViewHolder {
-        TextView timeStamp, fileName;
-        ImageView vertDot, fileIcon_img;
-        CardView fileIcon;
-        LinearLayout folderIcon;
+        TextView timeStamp, fileName, vertDot;
+        ImageView fileIcon_img;
+        LinearLayout folderIcon, itemClick, fileIcon;
 
         public Common_adapter_ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -152,7 +293,7 @@ public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_a
             fileIcon = itemView.findViewById(R.id.file_folder_icon);
             folderIcon = itemView.findViewById(R.id.folder_icon_item_view);
             fileIcon_img = itemView.findViewById(R.id.file_icon_view_item);
-
+            itemClick = itemView.findViewById(R.id.common_adapter_item_view);
         }
     }
 }

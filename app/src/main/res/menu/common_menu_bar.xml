@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/c_activity_selctAll"
+        android:title="Select all"/>
+
+    <item android:id="@+id/c_activity_sortBy"
+        android:title="Sort by"/>
+
+    <item android:id="@+id/c_activity_addNewFolder"
+        android:title="Add new folder"/>
+
+    <item android:id="@+id/grid_view"
+        android:icon="@drawable/ic_outline_view_module_24"
+        android:title="gridView"
+        app:showAsAction="always"/>
+</menu>

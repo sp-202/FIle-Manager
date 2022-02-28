@@ -1,16 +1,23 @@
 package com.example.fileexplorer.dynamic_tabs;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.fileexplorer.R;
 import com.example.fileexplorer.databinding.ActivityCommonBinding;
 import com.example.fileexplorer.util.FileList_provider;
 
@@ -34,8 +41,13 @@ public class Common_activity extends AppCompatActivity {
         binding = ActivityCommonBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         list_provider = new FileList_provider();
+        Toolbar toolbar = findViewById(R.id.common_activity_toolBar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
         executeFileFolderTask();
+
     }
+
 
     private void executeFileFolderTask() {
         ExecutorService executor = Executors.newFixedThreadPool(1);
@@ -56,5 +68,31 @@ public class Common_activity extends AppCompatActivity {
                 binding.commonActivityRecyclerView.setAdapter(new Common_adapter(this, fileArrayList));
             });
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.common_menu_bar, menu);
+        return true;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.c_activity_selctAll:
+                Toast.makeText(getApplicationContext(), "Memory View", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.c_activity_addNewFolder:
+                Toast.makeText(getApplicationContext(), "New folder", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.c_activity_sortBy:
+                Toast.makeText(getApplicationContext(), "Sort by", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.grid_view:
+                Toast.makeText(getApplicationContext(), "Grid view", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FileExplorer">
         <activity
+            android:name=".FileReader_activity_for_own"
+            android:exported="false" />
+        <activity
             android:name=".FileReaderForAnyFile"
             android:exported="true">
             <intent-filter tools:ignore="AppLinkUrlError">
@@ -31,6 +34,7 @@
                 <data android:mimeType="text/css" />
                 <data android:mimeType="text/plain" />
                 <data android:mimeType="text/html" />
+                <data android:mimeType="application/javascript" />
                 <data android:mimeType="image/svg+xml" />
                 <data android:mimeType="text/x-c++hdr" />
                 <data android:mimeType="text/x-c++src" />
@@ -44,7 +48,30 @@
             android:exported="false" />
         <activity
             android:name=".dynamic_tabs.Common_activity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/pdf" />
+            </intent-filter>
+
+
+        </activity>
         <activity
             android:name=".search_view.SearchView"
             android:exported="false" />
@@ -60,6 +87,17 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:permission="android.permission.MANAGE_DOCUMENT">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
     </application>
 
 </manifest>

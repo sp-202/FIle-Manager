@@ -19,3 +19,11 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-obfuscationdictionary "C:\ObfuscationText.txt"
+-classobfuscationdictionary "C:\ObfuscationText.txt"
+-packageobfuscationdictionary "C:\ObfuscationText.txt"
+-keeppackagenames "interface"
+#-mergeinterfacesaggressively
+#-overloadaggressively
+-repackageclasses "ndsdhdkhdydwnmdqsdkwdkwdu"

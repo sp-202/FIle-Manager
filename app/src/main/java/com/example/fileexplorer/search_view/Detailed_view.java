@@ -134,12 +134,9 @@ public class Detailed_view extends AppCompatActivity {
         Handler handler3 = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
             // Background work here
-            long size = 0;
-            try {
-                size = getFileAndFolderSize.FileSize(path1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Path path3 = Paths.get(path1);
+            long size;
+            size = getFileAndFolderSize.getFolderSize(getApplicationContext(), path3.toFile());
 
             long finalSize = size;
             handler.post(() -> {
@@ -159,12 +156,9 @@ public class Detailed_view extends AppCompatActivity {
         });
 
         executor.execute(() -> {
+            Path path4 = Paths.get(path1);
             long count = 0;
-            try {
-                count = getFileAndFolderSize.countFiles(path1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            count = getFileAndFolderSize.getFolderSize123(getApplicationContext(), path4.toFile());
 
             long finalCount = count;
             handler3.post(() -> binding.detailedPageFileInfo.setText(finalCount + "  files"));

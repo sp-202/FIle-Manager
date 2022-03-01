@@ -59,7 +59,7 @@ public class Home_fragment extends Fragment {
 
         downloads_icon.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), Common_activity.class);
-            String path1 = "/storage/emulated/0/Download";
+            String path1 = "/storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/WhatsApp Images";
             intent.putExtra("path_from", path1);
             startActivity(intent);
         });

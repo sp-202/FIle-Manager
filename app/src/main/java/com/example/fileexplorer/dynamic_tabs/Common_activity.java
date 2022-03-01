@@ -19,6 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.fileexplorer.R;
 import com.example.fileexplorer.databinding.ActivityCommonBinding;
+import com.example.fileexplorer.search_view.FileListModel;
+import com.example.fileexplorer.search_view.FolderListProvider;
+import com.example.fileexplorer.search_view.GetFileAndFolderSize;
 import com.example.fileexplorer.util.FileList_provider;
 
 import java.io.File;
@@ -34,8 +37,9 @@ public class Common_activity extends AppCompatActivity {
 
     private static final String TAG = "myApp458";
     ActivityCommonBinding binding;
-    public ArrayList<File> fileArrayList;
-    FileList_provider list_provider;
+    public ArrayList<FolderListProvider> folderArrayList;
+    public ArrayList<FileListModel> fileArrayList;
+    GetFileAndFolderSize fileAndFolderSize;
     String path;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -44,7 +48,7 @@ public class Common_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCommonBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        list_provider = new FileList_provider();
+        fileAndFolderSize = new GetFileAndFolderSize();
         Toolbar toolbar = findViewById(R.id.common_activity_toolBar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -69,18 +73,14 @@ public class Common_activity extends AppCompatActivity {
         executor.execute(() -> {
             binding.progressBar.setVisibility(View.VISIBLE);
             binding.commonActivityRecyclerView.setVisibility(View.GONE);
-            try {
-                fileArrayList = list_provider.Downloads(path);
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.d(TAG, "executeFileFolderTask: " + e);
-            }
-
+            folderArrayList = fileAndFolderSize.FolderListInFolder(getApplicationContext(), path);
+            fileArrayList = fileAndFolderSize.FileListInFolder(getApplicationContext(), path);
+            Log.d(TAG, "executeFileFolderTask: " + fileArrayList.size());
             handler.post(() -> {
                 binding.progressBar.setVisibility(View.GONE);
                 binding.commonActivityRecyclerView.setVisibility(View.VISIBLE);
                 binding.commonActivityRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-                binding.commonActivityRecyclerView.setAdapter(new Common_adapter(this, fileArrayList));
+                binding.commonActivityRecyclerView.setAdapter(new Common_adapter(this, fileArrayList, folderArrayList));
             });
         });
     }

@@ -20,11 +20,17 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.fileexplorer.R;
 import com.example.fileexplorer.search_view.Detailed_view;
+import com.example.fileexplorer.search_view.FileListModel;
+import com.example.fileexplorer.search_view.FolderListProvider;
 import com.example.fileexplorer.util.DataHolder;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,11 +40,13 @@ import java.util.Objects;
 public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_adapter_ViewHolder> {
     private static final String TAG = "myApp789";
     Context context;
-    ArrayList<File> fileArrayList;
+    ArrayList<FileListModel> fileArrayList;
+    ArrayList<FolderListProvider> folderArrayList;
 
-    public Common_adapter(Context context, ArrayList<File> fileArrayList) {
+    public Common_adapter(Context context, ArrayList<FileListModel> fileArrayList, ArrayList<FolderListProvider> folderArrayList) {
         this.context = context;
         this.fileArrayList = fileArrayList;
+        this.folderArrayList = folderArrayList;
     }
 
     @NonNull
@@ -51,7 +59,9 @@ public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_a
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onBindViewHolder(@NonNull Common_adapter_ViewHolder holder, int position) {
-        File selectedFile = fileArrayList.get(position);
+
+        Path filePath = Paths.get(fileArrayList.get(position).getRelativePath());
+        File selectedFile = filePath.toFile();
         holder.fileName.setText(selectedFile.getName());
         Date lastModified = new Date(selectedFile.lastModified());
         @SuppressLint("SimpleDateFormat")
@@ -71,33 +81,13 @@ public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_a
                     || selectedFile.getName().toLowerCase().endsWith(".jpeg")
                     || selectedFile.getName().toLowerCase().endsWith(".png")) {
                 holder.fileIcon_img.setImageResource(R.drawable.ic_twotone_photo_24);
-            } else if (selectedFile.getName().toLowerCase().endsWith(".xml")) {
-                holder.fileIcon_img.setImageResource(R.drawable.ic_icon_xml_file);
-            } else if (selectedFile.getName().toLowerCase().endsWith(".js")) {
-                holder.fileIcon_img.setImageResource(R.drawable.ic_icon_js_file);
-            } else if (selectedFile.getName().toLowerCase().endsWith(".xlsx")
-                    || selectedFile.getName().toLowerCase().endsWith(".csv")) {
-                holder.fileIcon_img.setImageResource(R.drawable.ic_icon_xlsx_file);
-            } else if (selectedFile.getName().toLowerCase().endsWith(".docx")) {
-                holder.fileIcon_img.setImageResource(R.drawable.ic_home_icon);
-            } else if (selectedFile.getName().toLowerCase().endsWith(".ppt")) {
-                holder.fileIcon_img.setImageResource(R.drawable.ic_icon_ppt_file);
-            } else if (selectedFile.getName().toLowerCase().endsWith(".c")
-                    || selectedFile.getName().toLowerCase().endsWith(".cpp")
-                    || selectedFile.getName().toLowerCase().endsWith(".h")
-                    || selectedFile.getName().toLowerCase().endsWith(".c++")
-                    || selectedFile.getName().toLowerCase().endsWith(".cxx")) {
-                holder.fileIcon_img.setImageResource(R.drawable.ic_icon_cpp_file);
-            } else if (selectedFile.getName().toLowerCase().endsWith(".html")) {
-                holder.fileIcon_img.setImageResource(R.drawable.ic_icon_html_2_file);
-            } else if (selectedFile.getName().toLowerCase().endsWith(".css")) {
-                holder.fileIcon_img.setImageResource(R.drawable.ic_icon_css_file);
-            } else if (selectedFile.getName().toLowerCase().endsWith(".rar")
-                    || selectedFile.getName().toLowerCase().endsWith(".zip")) {
-                holder.fileIcon_img.setImageResource(R.drawable.ic_icon_zip_folder);
-            } else if (selectedFile.getName().toLowerCase().endsWith(".apk")) {
-                holder.fileIcon_img.setImageResource(R.drawable.ic_baseline_android_24);
-            } else {
+            }
+//                try {
+//                    Glide.with(context).load(selectedFile).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.fileIcon_img);
+//                } catch (Exception e) {
+//                    Log.d(TAG, "onBindViewHolder: " + e.toString());
+//                }
+            else {
                 holder.fileIcon_img.setImageResource(R.drawable.ic_file_icon);
             }
 
@@ -279,6 +269,7 @@ public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_a
             });
             popupMenu.show();
         });
+
 
     }
 

@@ -16,6 +16,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.fileexplorer.databinding.ActivityMainBinding;
+import com.example.fileexplorer.dynamic_tabs.Common_activity;
 import com.example.fileexplorer.fragments.Card_fragment;
 import com.example.fileexplorer.fragments.Home_fragment;
 import com.example.fileexplorer.fragments.Internal_fragment;
@@ -103,8 +104,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.memory_state){
-            Toast.makeText(getApplicationContext(), "Memory View", Toast.LENGTH_SHORT).show();
+        if (id == R.id.memory_state) {
+//            Toast.makeText(getApplicationContext(), "Memory View", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), Common_activity.class);
+            String path1 = "/storage/emulated/0/";
+            intent.putExtra("path_from", path1);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

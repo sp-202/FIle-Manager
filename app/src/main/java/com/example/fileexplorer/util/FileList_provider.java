@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.TreeSet;
 
 public class FileList_provider {
@@ -20,11 +21,18 @@ public class FileList_provider {
         DirectoryStream<Path> directoryStream;
         directoryStream = Files.newDirectoryStream(Paths.get(downloadPath));
         for (Path path1 : directoryStream) {
-            if (path1.toFile().isDirectory())
+            if (path1.toFile().isDirectory() && !path1.toFile().isHidden())
                 FolderName.add(path1.toFile());
-            else FileName.add(path1.toFile());
+            else if (path1.toFile().isFile() && !path1.toFile().isHidden())
+                FileName.add(path1.toFile());
         }
 
+        FileName.sort(new Comparator<File>() {
+            @Override
+            public int compare(File file, File t1) {
+                return -Long.compare(file.lastModified(), t1.lastModified());
+            }
+        });
         FolderName.addAll(FileName);
         Log.d(TAG, "Downloads: " + FolderName);
         return FolderName;

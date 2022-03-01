@@ -59,6 +59,8 @@ public class Home_fragment extends Fragment {
 
         downloads_icon.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), Common_activity.class);
+            String path1 = "/storage/emulated/0/Download";
+            intent.putExtra("path_from", path1);
             startActivity(intent);
         });
 
@@ -68,7 +70,9 @@ public class Home_fragment extends Fragment {
         });
 
         memory_icon.setOnClickListener(view -> {
-            Intent intent = new Intent(getActivity(), FileReaderForAnyFile.class);
+            Intent intent = new Intent(getActivity(), Common_activity.class);
+            String path1 = "/storage/emulated/0/";
+            intent.putExtra("path_from", path1);
             startActivity(intent);
         });
 

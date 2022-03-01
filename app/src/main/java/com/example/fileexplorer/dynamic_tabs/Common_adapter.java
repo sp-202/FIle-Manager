@@ -10,7 +10,6 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,21 +17,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.fileexplorer.FileReaderForAnyFile;
 import com.example.fileexplorer.R;
 import com.example.fileexplorer.search_view.Detailed_view;
 import com.example.fileexplorer.util.DataHolder;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_adapter_ViewHolder> {
     private static final String TAG = "myApp789";
@@ -237,6 +234,15 @@ public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_a
                 } catch (Exception e) {
                     Log.d(TAG, "onBindViewHolder: " + e.toString());
                 }
+            } else {
+
+                Intent intent = new Intent(context, Common_activity.class);
+                String path = selectedFile.getAbsolutePath();
+                intent.putExtra("path_from", path);
+                Log.d(TAG, "onBindViewHolder: " + path);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+
             }
         });
         holder.vertDot.setOnClickListener(view -> {
@@ -273,6 +279,7 @@ public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_a
             });
             popupMenu.show();
         });
+
     }
 
     @Override

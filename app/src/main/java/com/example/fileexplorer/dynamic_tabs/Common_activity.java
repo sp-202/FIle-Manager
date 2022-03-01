@@ -23,7 +23,10 @@ import com.example.fileexplorer.util.FileList_provider;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -33,6 +36,7 @@ public class Common_activity extends AppCompatActivity {
     ActivityCommonBinding binding;
     public ArrayList<File> fileArrayList;
     FileList_provider list_provider;
+    String path;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -44,8 +48,18 @@ public class Common_activity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.common_activity_toolBar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        executeFileFolderTask();
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
+        path = getIntent().getStringExtra("path_from");
+        Path p = Paths.get(path);
+        if (p.toFile().canRead() && p.toFile().canWrite()) {
+            binding.nothingTextView.setVisibility(View.GONE);
+            executeFileFolderTask();
+        } else {
+            Toast.makeText(getApplicationContext(), "Can not open", Toast.LENGTH_SHORT).show();
+            binding.nothingTextView.setVisibility(View.VISIBLE);
+            binding.commonActivityRecyclerView.setVisibility(View.GONE);
+        }
     }
 
 
@@ -53,14 +67,15 @@ public class Common_activity extends AppCompatActivity {
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.commonActivityRecyclerView.setVisibility(View.GONE);
             try {
-                fileArrayList = list_provider.Downloads("/storage/emulated/0/Download");
+                fileArrayList = list_provider.Downloads(path);
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.d(TAG, "executeFileFolderTask: " + e);
             }
-            binding.progressBar.setVisibility(View.VISIBLE);
-            binding.commonActivityRecyclerView.setVisibility(View.GONE);
+
             handler.post(() -> {
                 binding.progressBar.setVisibility(View.GONE);
                 binding.commonActivityRecyclerView.setVisibility(View.VISIBLE);
@@ -69,6 +84,7 @@ public class Common_activity extends AppCompatActivity {
             });
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.common_menu_bar, menu);
@@ -79,7 +95,7 @@ public class Common_activity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.c_activity_selctAll:
                 Toast.makeText(getApplicationContext(), "Memory View", Toast.LENGTH_SHORT).show();
                 break;
@@ -91,6 +107,9 @@ public class Common_activity extends AppCompatActivity {
                 break;
             case R.id.grid_view:
                 Toast.makeText(getApplicationContext(), "Grid view", Toast.LENGTH_SHORT).show();
+                break;
+            case android.R.id.home:
+                this.finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

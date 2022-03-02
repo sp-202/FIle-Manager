@@ -36,7 +36,7 @@ public class SearchView extends AppCompatActivity {
             MediaStore.Files.FileColumns.DATA, MediaStore.Files.FileColumns.DISPLAY_NAME
     };
     @SuppressLint("SdCardPath")
-    String path = "/storage/emulated/0/Download";
+    String path = "/storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/WhatsApp Images/Sent";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +61,11 @@ public class SearchView extends AppCompatActivity {
         executors.execute(new Runnable() {
             @Override
             public void run() {
-                mediaListInDevice();
+//                mediaListInDevice();
+                long start = System.currentTimeMillis();
                 FileListInFolderQuery();
+                long end = System.currentTimeMillis();
+                Log.d(TAG, "run: " + (end - start));
             }
         });
     }
@@ -108,16 +111,12 @@ public class SearchView extends AppCompatActivity {
         try {
             cursor.moveToFirst();
             do {
-                String relativePath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATA));
-                Path path1 = Paths.get(relativePath);
-                if (!path1.toFile().isDirectory()) {
-                    String fileName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME));
-                    String filePath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATA));
-                    String fileSize = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.SIZE));
-                    String modified = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATE_MODIFIED));
-                    fileHashList.add(new FileListModel(fileName, filePath, fileSize, modified));
-                }
 
+                String fileName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME));
+                String filePath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATA));
+                String fileSize = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.SIZE));
+                String modified = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATE_MODIFIED));
+                fileHashList.add(new FileListModel(fileName, filePath, fileSize, modified));
 
             } while (cursor.moveToNext());
             cursor.close();
@@ -127,8 +126,12 @@ public class SearchView extends AppCompatActivity {
         Log.d(TAG, "mediaListInDevice: " + fileHashList);
         Log.d(TAG, "mediaListInDevice: " + fileHashList.size());
         Log.d(TAG, "mediaListInDevice: " + fileHashList.get(0).getFileName());
-        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(1).getFileName());
+        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(0).getFileName());
+        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(0).getRelativePath());
         Log.d(TAG, "mediaListInDevice: " + fileHashList.get(0).getDateOfModified());
+        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(1).getFileName());
+        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(1).getFileName());
+        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(1).getRelativePath());
         Log.d(TAG, "mediaListInDevice: " + fileHashList.get(1).getDateOfModified());
     }
 }

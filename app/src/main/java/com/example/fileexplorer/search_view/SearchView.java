@@ -133,5 +133,11 @@ public class SearchView extends AppCompatActivity {
         Log.d(TAG, "mediaListInDevice: " + fileHashList.get(1).getFileName());
         Log.d(TAG, "mediaListInDevice: " + fileHashList.get(1).getRelativePath());
         Log.d(TAG, "mediaListInDevice: " + fileHashList.get(1).getDateOfModified());
+        Path s = Paths.get(path);
+        Log.d(TAG, "FileListInFolderQuery: "+s.toFile().isFile());
+        Log.d(TAG, "FileListInFolderQuery: "+s.toFile().isDirectory());
+        Log.d(TAG, "FileListInFolderQuery: "+s.toFile().isHidden());
+        Log.d(TAG, "FileListInFolderQuery: "+s.toFile().canRead());
+        Log.d(TAG, "FileListInFolderQuery: "+s.toFile().canExecute());
     }
 }

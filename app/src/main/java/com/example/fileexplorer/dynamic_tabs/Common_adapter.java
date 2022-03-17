@@ -82,11 +82,11 @@ public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_a
                     || selectedFile.getName().toLowerCase().endsWith(".png")) {
                 holder.fileIcon_img.setImageResource(R.drawable.ic_twotone_photo_24);
             }
-//                try {
-//                    Glide.with(context).load(selectedFile).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.fileIcon_img);
-//                } catch (Exception e) {
-//                    Log.d(TAG, "onBindViewHolder: " + e.toString());
-//                }
+                try {
+                    Glide.with(context).load(selectedFile).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.fileIcon_img);
+                } catch (Exception e) {
+                    Log.d(TAG, "onBindViewHolder: " + e.toString());
+                }
             else {
                 holder.fileIcon_img.setImageResource(R.drawable.ic_file_icon);
             }

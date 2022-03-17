@@ -46,7 +46,8 @@ public class Permission_checking extends AppCompatActivity {
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.maniPage_back));
         // Declaration of the permission array
         String[] PERMISSIONS = new String[]{
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
         };
         // Works only for build version is Android 10 or less than that
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
@@ -71,6 +72,11 @@ public class Permission_checking extends AppCompatActivity {
             editor.putString("FirstTimeInstall", "Yes");
             editor.apply();
         }
+
+        Log.d(TAG, "onCreate: "+Environment.getExternalStorageState());
+        Log.d(TAG, "onCreate: "+Environment.isExternalStorageManager());
+        Log.d(TAG, "onCreate: "+Environment.MEDIA_UNKNOWN);
+        Log.d(TAG, "onCreate: "+Environment.getExternalStorageDirectory());
     }
 
     @Override
@@ -99,13 +105,13 @@ public class Permission_checking extends AppCompatActivity {
             try {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
                 intent.addCategory("android.intent.category.DEFAULT");
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                Uri uri = Uri.parse(String.format("package:%s", getApplicationContext().getPackageName()));
                 intent.setData(uri);
                 startActivityForResult(intent, 101);
             } catch (Exception e) {
                 e.printStackTrace();
                 Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
                 startActivityForResult(intent, 101);
             }
         }
@@ -133,7 +139,7 @@ public class Permission_checking extends AppCompatActivity {
                 builder.setCancelable(false);
                 // set ok button on alert dialog
                 builder.setPositiveButton(R.string.dialog_ok, (dialogInterface, i) -> ActivityCompat.requestPermissions(Permission_checking.this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE));
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE));
 
                 // set cancel on alert dialog
                 builder.setNegativeButton(R.string.dialog_cancel, (dialogInterface, i) -> {

@@ -2,16 +2,19 @@ package com.example.fileexplorer.search_view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.documentfile.provider.DocumentFile;
 
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.example.fileexplorer.databinding.ActivitySerachViewBinding;
 
@@ -36,7 +39,7 @@ public class SearchView extends AppCompatActivity {
             MediaStore.Files.FileColumns.DATA, MediaStore.Files.FileColumns.DISPLAY_NAME
     };
     @SuppressLint("SdCardPath")
-    String path = "/storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/WhatsApp Images/Sent";
+    String path = "/sdcard/Android/media/com.whatsapp/WhatsApp/Media/.Statuses";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,7 @@ public class SearchView extends AppCompatActivity {
 //                mediaListInDevice();
                 long start = System.currentTimeMillis();
                 FileListInFolderQuery();
+                mediaQuery();
                 long end = System.currentTimeMillis();
                 Log.d(TAG, "run: " + (end - start));
             }
@@ -101,13 +105,10 @@ public class SearchView extends AppCompatActivity {
 
     public void FileListInFolderQuery() {
         Cursor cursor = getApplicationContext()
-                .getContentResolver().query(MediaStore.Files.getContentUri("external"),
-                        new String[]{MediaStore.MediaColumns.DISPLAY_NAME,
-                                MediaStore.MediaColumns.DATA,
-                                MediaStore.MediaColumns.SIZE,
-                                MediaStore.MediaColumns.DATE_MODIFIED,
-                        },
-                        MediaStore.MediaColumns.DATA + " LIKE ?", new String[]{path + "/%"}, null);
+                .getContentResolver().query(MediaStore.Files.getContentUri(MediaStore.VOLUME_INTERNAL),
+                        null,
+                        MediaStore.Files.FileColumns.DATA + " LIKE ? ", new String[]{path +"%/"}, null);
+        Log.d(TAG, "FileListInFolderQuery: " + cursor.getCount());
         try {
             cursor.moveToFirst();
             do {
@@ -123,21 +124,38 @@ public class SearchView extends AppCompatActivity {
         } catch (Exception e) {
             Log.d(TAG, "mediaListInDevice: " + e.toString());
         }
-        Log.d(TAG, "mediaListInDevice: " + fileHashList);
-        Log.d(TAG, "mediaListInDevice: " + fileHashList.size());
-        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(0).getFileName());
-        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(0).getFileName());
-        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(0).getRelativePath());
-        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(0).getDateOfModified());
-        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(1).getFileName());
-        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(1).getFileName());
-        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(1).getRelativePath());
-        Log.d(TAG, "mediaListInDevice: " + fileHashList.get(1).getDateOfModified());
-        Path s = Paths.get(path);
-        Log.d(TAG, "FileListInFolderQuery: "+s.toFile().isFile());
-        Log.d(TAG, "FileListInFolderQuery: "+s.toFile().isDirectory());
-        Log.d(TAG, "FileListInFolderQuery: "+s.toFile().isHidden());
-        Log.d(TAG, "FileListInFolderQuery: "+s.toFile().canRead());
-        Log.d(TAG, "FileListInFolderQuery: "+s.toFile().canExecute());
+        for (int i = 0; i < fileHashList.size(); i++) {
+            Log.d(TAG, "FileListInFolderQuery: " + fileHashList.get(i).getRelativePath());
+        }
+
+    }
+
+
+    @SuppressLint("Range")
+    public void mediaQuery() {
+        ArrayList<String> list = new ArrayList<>();
+        String hiddenFiles;
+        try {
+            String nonMediaCondition = MediaStore.Files.FileColumns.MEDIA_TYPE + " = "
+                    + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
+            String where = nonMediaCondition + " LIKE ? ";
+            String[] params = new String[]{path + "/%"};
+            Cursor cursor = getApplicationContext().getContentResolver().query(MediaStore.Files.getContentUri("external"),
+                    new String[]{MediaStore.Files.FileColumns.DATA},
+                    where, params, null);
+            Log.d(TAG, "cursor count: " + cursor.getCount());
+//            Toast.makeText(getApplicationContext(), cursor.getColumnCount(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), cursor.getCount(), Toast.LENGTH_SHORT).show();
+            while (cursor.moveToNext()) {
+                hiddenFiles = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DATA));
+                Log.d(TAG, "hidden files : " + hiddenFiles);
+                if (hiddenFiles != null)
+                    list.add(hiddenFiles);
+            }
+            cursor.close();
+        } catch (Exception e) {
+            Log.d(TAG, "mediaQuery: " + e.toString());
+        }
+        Log.d(TAG, "mediaQuery: " + list.size());
     }
 }

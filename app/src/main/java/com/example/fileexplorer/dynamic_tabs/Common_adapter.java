@@ -80,16 +80,19 @@ public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_a
             } else if (selectedFile.getName().toLowerCase().endsWith(".jpg")
                     || selectedFile.getName().toLowerCase().endsWith(".jpeg")
                     || selectedFile.getName().toLowerCase().endsWith(".png")) {
-                holder.fileIcon_img.setImageResource(R.drawable.ic_twotone_photo_24);
-            }
+
                 try {
                     Glide.with(context).load(selectedFile).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.fileIcon_img);
                 } catch (Exception e) {
                     Log.d(TAG, "onBindViewHolder: " + e.toString());
                 }
+            } else if (selectedFile.getName().toLowerCase().endsWith("svg")){
+                holder.fileIcon_img.setImageResource(R.drawable.ic_twotone_photo_24);
+            }
             else {
                 holder.fileIcon_img.setImageResource(R.drawable.ic_file_icon);
             }
+
 
         }
         holder.itemClick.setOnClickListener(view -> {

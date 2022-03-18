@@ -3,6 +3,8 @@ package com.example.fileexplorer.dynamic_tabs;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.StrictMode;
 import android.util.Log;
@@ -20,6 +22,7 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.fileexplorer.R;
 import com.example.fileexplorer.search_view.Detailed_view;
 import com.example.fileexplorer.util.DataHolder;
@@ -29,7 +32,6 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Objects;
 
 public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_adapter_ViewHolder> {
     private static final String TAG = "myApp789";
@@ -70,7 +72,12 @@ public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_a
             } else if (selectedFile.getName().toLowerCase().endsWith(".jpg")
                     || selectedFile.getName().toLowerCase().endsWith(".jpeg")
                     || selectedFile.getName().toLowerCase().endsWith(".png")) {
-                holder.fileIcon_img.setImageResource(R.drawable.ic_twotone_photo_24);
+
+                try {
+                    Glide.with(context).load(selectedFile).into(holder.fileIcon_img);
+                } catch (Exception e) {
+                    Log.d(TAG, "onBindViewHolder: " + e.toString());
+                }
             } else if (selectedFile.getName().toLowerCase().endsWith(".xml")) {
                 holder.fileIcon_img.setImageResource(R.drawable.ic_icon_xml_file);
             } else if (selectedFile.getName().toLowerCase().endsWith(".js")) {
@@ -96,7 +103,11 @@ public class Common_adapter extends RecyclerView.Adapter<Common_adapter.Common_a
                     || selectedFile.getName().toLowerCase().endsWith(".zip")) {
                 holder.fileIcon_img.setImageResource(R.drawable.ic_icon_zip_folder);
             } else if (selectedFile.getName().toLowerCase().endsWith(".apk")) {
-                holder.fileIcon_img.setImageResource(R.drawable.ic_baseline_android_24);
+//                holder.fileIcon_img.setImageResource(R.drawable.ic_baseline_android_24);
+                PackageInfo packageInfo = context.getPackageManager().getPackageArchiveInfo(selectedFile.getAbsolutePath(), 0);
+//                ApplicationInfo appInfo = packageInfo.applicationInfo;
+                Drawable icon = packageInfo.applicationInfo.loadIcon(context.getPackageManager());
+                holder.fileIcon_img.setImageDrawable(icon);
             } else {
                 holder.fileIcon_img.setImageResource(R.drawable.ic_file_icon);
             }
